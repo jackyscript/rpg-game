@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="assets/rpg.css" media="screen" />
+  </head>
+  <body>
+    <canvas id="game" width="1000" height="500"></canvas>
+    <div>
+    <textarea class="typing" id="gameText" readonly></textarea>
+    </div>
+    <div>Music: 
+    <button id="audioButton" title="Play music (provided there is a music track deployed)" onclick="togglePlay()" type="button">&#9658</button></div>
+    <details title="Show/Hide key controls">
+    <summary>Key controls</summary>
+      <ul>
+        <li>Arrow keys: Move player 1</li>
+        <li>T: Pick up item, below player</li>
+        <li>C: Cut tree (requires axe)</li>
+        <li>E: Interact with object: Open treasure box, talk...</li>
+        <li>F: Crush stone (requires pick axe)</li>
+        <li>X: Plant tree (requires shovel)</li>
+        <li>Y: Build bridge (requires wood and hammer) </li>
+        <li>R: Build wall (requires stone, shovel and hammer)</li>
+        <li>K: Player 1 shows hearts</li>
+      </ul>
+      <ul>
+        <li>WASD: Move player 2</li>
+        <li>Z: Pick up item, below player</li>
+        <li>I: Cut tree (requires axe)</li>
+        <li>U: Interact with object: Open treasure box, talk...</li>
+        <li>K: Crush stone (requires pick axe)</li>
+        <li>J: Plant tree (requires shovel)</li>
+        <li>H: Build bridge (requires wood and hammer) </li>
+        <li>L: Build wall (requires stone, shovel and hammer)</li>
+        <li>Q: Player 2 shows hearts</li>
+      </ul>
+      <ul>
+        <li>F1: Save</li>
+        <li>F2: Delete savegame</li>
+        <li>+: Change view to player 2</li>
+        <li>-: Change view to player 1</li>
+        <li>ENTER: Remove dialog</li>
+      </ul>
+    </details>
+    <audio id="gameMusic">
+      <source src="music/insertYourMusicTrackHere.mp3" type="audio/mpeg">
+      This browser does not support audio play.
+    </audio>
+    <details title="Show attribution">
+      <summary>Attribution
+      </summary>
+      <ul class="attribution">
+        <li>Inspired by "Tile Based - Game Development" by technologies4me: http://technologies4.me/articles/tile-map-canvas-javascript-a1/</li>
+      </ul>
+    </details>
+    <script type="text/javascript" src="assets/rpg.js"></script>
+    <script>
+      var myAudio = document.getElementById("gameMusic");
+      var audioButton = document.getElementById("audioButton");
+      game.focus();
+      var isPlaying = false;
+      myAudio.addEventListener('focus',function(){this.blur();},false);
+      function togglePlay() {
+        if (isPlaying) {
+          myAudio.pause()
+          audioButton.textContent = '\u2BC8'; 
+        } else {
+          myAudio.play();
+          audioButton.textContent = '||';
+        }
+      };
+      myAudio.onplaying = function() {
+        isPlaying = true;
+        audioButton.textContent = '||';
+      };
+      myAudio.onpause = function() {
+        isPlaying = false;
+        audioButton.textContent = '\u2BC8';
+      };
+      myAudio.onended = function() {
+        isPlaying = false;
+        audioButton.textContent = '\u2BC8';
+        myAudio.play();
+      };
+    </script>
+    
+  </body>
+</html>

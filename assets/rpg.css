@@ -1,0 +1,41 @@
+body {
+  background: black;
+  color: white;
+  font-family: Courier;
+  text-transform: uppercase
+}
+
+ul {
+  list-style-type: none
+}
+
+button {
+  width: 3em;
+  height: 2em;
+  color: white;
+  background-color: black;
+  border: 2px solid white
+}
+
+.attribution {
+  font-size: 10px
+}
+
+textarea {
+  resize: none;
+  width: 1000px; 
+  min-width:1000px; 
+  max-width:1000px; 
+
+  height:200px; 
+  min-height:200px;  
+  max-height:200px;
+  border-radius: 10px;
+  border: 8px double black;
+  pointer-events: none;
+  padding: 15px;
+  box-sizing: border-box;
+  font-family: Courier;
+  font-size: 20px;
+}
+    
