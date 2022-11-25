@@ -18,7 +18,7 @@ The tiles are conceptually drafted (with placeholder texts), for an immersive ex
 
 ## Build/Development:
 In this branch the goal is to migrate the project's structure using [ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
-During development [Live Server Plugin for vs code]https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer is used.
+Currently alongside development [Live Server Plugin for vs code](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) is used, as modules development requires a server from which the files will be requested from ([see also the following link](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#other_differences_between_modules_and_standard_scripts)).
 
 ## Deployment:
-Currently it is a simple HTML/CSS/JS website, nothing to worry about.
+Modules are natively supported in most modern browsers ([for details see](https://caniuse.com/es6-module)). However in deployment it would be optimal to package the modules into a single bundled .js file and use that for deployment ([and/or use the "nomodule" attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-nomodule)). This is also a remaining todo for this project.
