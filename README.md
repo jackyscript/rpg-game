@@ -16,7 +16,9 @@ A browser game using HTML Canvas and JS
 
 The tiles are conceptually drafted (with placeholder texts), for an immersive experience a thorough design would be required.
 
+## Build/Development:
+In this branch the goal is to migrate the project's structure using [ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
+During development [Live Server Plugin for vs code]https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer is used.
+
 ## Deployment:
 Currently it is a simple HTML/CSS/JS website, nothing to worry about.
-
-
