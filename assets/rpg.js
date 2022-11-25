@@ -2467,9 +2467,11 @@
             new MapObject(getObjectTypeByName('Box')).placeAt(23, 10);
 
             var spawnCake = function() {
-                var flowerFieldWidth = 11;
-                for (i = 0; i <= flowerFieldWidth; i++) {
-                    for (j = 19; j <= 24; j++) {
+                const flowerFieldWidth = 11;
+                const rowStart = 19;
+                const rowEnd = 24;
+                for (var i = 0; i <= flowerFieldWidth; i++) {
+                    for (var j = rowStart; j <= rowEnd; j++) {
                         new MapObject(getObjectTypeByName('Cake')).placeAt(i, j);
                     }
                 }
