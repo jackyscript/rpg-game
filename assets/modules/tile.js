@@ -71,3 +71,5 @@ TileMap.prototype.addRoofs = function (roofs) {
         }
     }
 };
+
+export const mapTileData = new TileMap();
