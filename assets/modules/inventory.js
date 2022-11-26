@@ -1,5 +1,6 @@
+import { Sprite } from "./sprite.js";
 import { toIndex } from "./map.js";
-import { mapTileData } from "./tile.js";
+import { mapTileData } from "./tile/tile.js";
 
 export function Stack(id, qty) {
     this.type = id;
@@ -84,4 +85,84 @@ PlacedItemStack.prototype.placeAt = function (nx, ny) {
     this.y = ny;
 
     mapTileData.map[toIndex(nx, ny)].itemStack = this;
+};
+
+export const itemTypes = {
+    1: {
+        name: "Star",
+        maxStack: 2,
+        sprite: new Sprite([{
+            x: 240,
+            y: 0,
+            w: 40,
+            h: 40
+        }]),
+        offset: [0, 0]
+    },
+    2: {
+        name: "Axe",
+        maxStack: 1,
+        sprite: new Sprite([{
+            x: 300,
+            y: 40,
+            w: 26,
+            h: 26
+        }]),
+        offset: [0, 0]
+    },
+    3: {
+        name: "Pickaxe",
+        maxStack: 1,
+        sprite: new Sprite([{
+            x: 326,
+            y: 40,
+            w: 25,
+            h: 25
+        }]),
+        offset: [0, 0]
+    },
+    4: {
+        name: "Hammer",
+        maxStack: 1,
+        sprite: new Sprite([{
+            x: 351,
+            y: 40,
+            w: 24,
+            h: 24
+        }]),
+        offset: [0, 0]
+    },
+    5: {
+        name: "Wood plank",
+        maxStack: 999,
+        sprite: new Sprite([{
+            x: 375,
+            y: 40,
+            w: 27,
+            h: 21
+        }]),
+        offset: [0, 0]
+    },
+    6: {
+        name: "Shovel",
+        maxStack: 1,
+        sprite: new Sprite([{
+            x: 300,
+            y: 66,
+            w: 26,
+            h: 26
+        }]),
+        offset: [0, 0]
+    },
+    7: {
+        name: "Iron ore",
+        maxStack: 999,
+        sprite: new Sprite([{
+            x: 402,
+            y: 40,
+            w: 28,
+            h: 24
+        }]),
+        offset: [0, 0]
+    },
 };

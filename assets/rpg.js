@@ -1,6 +1,10 @@
-import {map as gameMap, toIndex, mapWidth, mapHeight} from "./modules/map.js"
-import {Tile, mapTileData} from "./modules/tile.js"
-import {Stack, PlacedItemStack, Inventory} from "./modules/inventory.js"
+import { map as gameMap, toIndex, mapWidth, mapHeight } from "./modules/map.js"
+import { Tile, mapTileData } from "./modules/tile/tile.js"
+import { Stack, PlacedItemStack, Inventory, itemTypes } from "./modules/inventory.js"
+import { tilesetLoaded } from "./modules/tile/tileset.js"
+import { roofList } from "./modules/roof.js"
+import { Sprite } from "./modules/sprite.js"
+import { gameContext } from "./modules/context.js"
 
 (function rpgGame() {
     var greetingTexts = ["Add your greetings here!", "Hello player 1!", "Hello player 2!", "In every programming project there must be one occurence of 'Hello world', don't you think?", "I don't know what I am talking about.", "Some greetings!", "Happy Birthday!", "Merry Christmas!", "Glad to see you, hope you are doing well?", "There you are, where were you heading?", "Happy to meet you."]
@@ -39,70 +43,12 @@ import {Stack, PlacedItemStack, Inventory} from "./modules/inventory.js"
     function resetTextArea() {
         document.getElementById("gameText").innerHTML = "";
     }
-    var gameContext = null;
 
     var isViewportSetOnPlayer1 = true;
     
     var gameWidth = document.getElementById('game').getAttribute('width')
     var gameHeight = document.getElementById('game').getAttribute('height')
 
-    var roofList = [{
-            x: 0,
-            y: 3,
-            w: 8,
-            h: 9,
-            data: [
-                10, 10, 10, 10, 11, 11, 11, 11,
-                10, 10, 10, 10, 11, 11, 11, 11,
-                10, 10, 10, 10, 11, 11, 11, 11,
-                10, 10, 10, 10, 11, 11, 11, 11,
-                10, 10, 10, 10, 11, 11, 11, 11,
-                10, 10, 10, 10, 11, 11, 11, 11,
-                10, 10, 10, 10, 11, 11, 11, 11,
-                10, 10, 10, 10, 11, 11, 11, 11,
-                10, 10, 10, 10, 11, 11, 11, 11,
-            ]
-        },
-        {
-            x: 3,
-            y: 12,
-            w: 2,
-            h: 4,
-            data: [
-                10, 11,
-                10, 11,
-                10, 11,
-                10, 11,
-            ]
-        },
-        {
-            x: 15,
-            y: 5,
-            w: 5,
-            h: 4,
-            data: [
-                10, 10, 11, 11, 11,
-                10, 10, 11, 11, 11,
-                10, 10, 11, 11, 11,
-                10, 10, 11, 11, 11
-            ]
-        },
-        {
-            x: 14,
-            y: 9,
-            w: 6,
-            h: 7,
-            data: [
-                10, 10, 10, 11, 11, 11,
-                10, 10, 10, 11, 11, 11,
-                10, 10, 10, 11, 11, 11,
-                10, 10, 10, 11, 11, 11,
-                10, 10, 10, 11, 11, 11,
-                10, 10, 10, 11, 11, 11,
-                10, 10, 10, 11, 11, 11
-            ]
-        }
-    ];
     var cakesEaten = 0;
     var tileWidth = 40,
         tileHeight = 40;
@@ -111,9 +57,6 @@ import {Stack, PlacedItemStack, Inventory} from "./modules/inventory.js"
         framesLastSecond = 0,
         lastFrameTime = 0;
 
-    var tileset = null,
-        tilesetURL = "assets/tileset.png",
-        tilesetLoaded = false;
 
     var gameTime = 0;
     var gameSpeeds = [{
@@ -138,145 +81,8 @@ import {Stack, PlacedItemStack, Inventory} from "./modules/inventory.js"
     var player1UseLeftFootSprite = false;
     var player2UseLeftFootSprite = false;
 
-    function Sprite(data) {
-        this.animated = data.length > 1;
-        this.frameCount = data.length;
-        this.duration = 0;
-        this.loop = true;
-
-        if (data.length > 1) {
-            for (var i in data) {
-                if (typeof data[i].d == 'undefined') {
-                    data[i].d = 100;
-                }
-                if (data[i].d == 'random') {
-                    data[i].d = getRandomInt(500, 800);
-                }
-                this.duration += data[i].d;
-
-                if (typeof data[i].loop != 'undefined') {
-                    this.loop = data[i].loop ? true : false;
-                }
-            }
-        }
-
-        this.frames = data;
-    }
-    Sprite.prototype.draw = function(t, x, y) {
-        var frameIndex = 0;
-
-        if (!this.loop && this.animated && t >= this.duration) {
-            frameIndex = (this.frames.length - 1);
-        } else if (this.animated) {
-            t = t % this.duration;
-            var totalD = 0;
-
-            for (var i in this.frames) {
-                totalD += this.frames[i].d;
-                frameIndex = i;
-
-                if (t <= totalD) {
-                    break;
-                }
-            }
-        }
-
-        var offset = (typeof this.frames[frameIndex].offset == 'undefined' ? [0, 0] : this.frames[frameIndex].offset);
-
-        gameContext.drawImage(tileset,
-            this.frames[frameIndex].x, this.frames[frameIndex].y,
-            this.frames[frameIndex].w, this.frames[frameIndex].h,
-            x + offset[0], y + offset[1],
-            this.frames[frameIndex].w, this.frames[frameIndex].h);
-    };
-
-    var itemTypes = {
-        1: {
-            name: "Star",
-            maxStack: 2,
-            sprite: new Sprite([{
-                x: 240,
-                y: 0,
-                w: 40,
-                h: 40
-            }]),
-            offset: [0, 0]
-        },
-        2: {
-            name: "Axe",
-            maxStack: 1,
-            sprite: new Sprite([{
-                x: 300,
-                y: 40,
-                w: 26,
-                h: 26
-            }]),
-            offset: [0, 0]
-        },
-        3: {
-            name: "Pickaxe",
-            maxStack: 1,
-            sprite: new Sprite([{
-                x: 326,
-                y: 40,
-                w: 25,
-                h: 25
-            }]),
-            offset: [0, 0]
-        },
-        4: {
-            name: "Hammer",
-            maxStack: 1,
-            sprite: new Sprite([{
-                x: 351,
-                y: 40,
-                w: 24,
-                h: 24
-            }]),
-            offset: [0, 0]
-        },
-        5: {
-            name: "Wood plank",
-            maxStack: 999,
-            sprite: new Sprite([{
-                x: 375,
-                y: 40,
-                w: 27,
-                h: 21
-            }]),
-            offset: [0, 0]
-        },
-        6: {
-            name: "Shovel",
-            maxStack: 1,
-            sprite: new Sprite([{
-                x: 300,
-                y: 66,
-                w: 26,
-                h: 26
-            }]),
-            offset: [0, 0]
-        },
-        7: {
-            name: "Iron ore",
-            maxStack: 999,
-            sprite: new Sprite([{
-                x: 402,
-                y: 40,
-                w: 28,
-                h: 24
-            }]),
-            offset: [0, 0]
-        },
-    };
-
     var quantifiableItems = [5, 7];
 
-    function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
     var objectCollision = {
         none: 0,
         solid: 1
@@ -2176,7 +1982,6 @@ import {Stack, PlacedItemStack, Inventory} from "./modules/inventory.js"
     };
     window.onload = function() {
 
-        gameContext = document.getElementById('game').getContext("2d");
         requestAnimationFrame(drawGame);
         gameContext.font = "bold 10pt sans-serif";
 
@@ -2200,16 +2005,6 @@ import {Stack, PlacedItemStack, Inventory} from "./modules/inventory.js"
         viewport.screen = [gameWidth,
             gameHeight
         ];
-
-        tileset = new Image();
-        tileset.onerror = function() {
-            gameContext = null;
-            alert("Failed loading tileset.");
-        };
-        tileset.onload = function() {
-            tilesetLoaded = true;
-        };
-        tileset.src = tilesetURL;
 
         mapTileData.buildMapFromData(gameMap, mapWidth, mapHeight);
         mapTileData.addRoofs(roofList);
