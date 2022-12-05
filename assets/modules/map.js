@@ -73,6 +73,5 @@ export function toIndex(x, y) {
     return ((y * mapWidth) + x);
 }
 
-
 export const mapWidth = 34,
 mapHeight = 62;
