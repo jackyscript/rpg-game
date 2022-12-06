@@ -215,6 +215,9 @@ import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileType
     var player1 = new Character("player1");
     var player2 = new Character("player2");
 
+    player1.otherPlayer = player2;
+    player2.otherPlayer = player1;
+
     player1.tileFrom = [1, 17];
     player1.tileTo = [1, 17];
     player1.timeMoved = 0;
@@ -252,11 +255,13 @@ import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileType
     function Character(name) {
         this.name = name;
         this.isPlayer1 = name == 'player1' ? true : false;
+        this.isPlayer2 = !this.isPlayer1;
         this.tileFrom = [1, 1];
         this.tileTo = [1, 1];
         this.timeMoved = 0;
         this.dimensions = [30, 30];
         this.position = [45, 45];
+        this.otherPlayer = undefined;
 
         this.delayMove = {};
         this.delayMove[floorTypes.path] = 300;
@@ -510,12 +515,12 @@ import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileType
     Character.prototype.collidesWithPlayer = function(player, new_position) {
 
         var willCollideWithPlayer = false;
-        if (player === player1) {
-            if (player2.tileFrom[0] == new_position[0] && player2.tileFrom[1] == new_position[1]) {
+        if (player.isPlayer1) {
+            if (this.otherPlayer.tileFrom[0] == new_position[0] && this.otherPlayer.tileFrom[1] == new_position[1]) {
                 willCollideWithPlayer = true;
             }
-        } else if (player === player2) {
-            if (player1.tileFrom[0] == new_position[0] && player1.tileFrom[1] == new_position[1]) {
+        } else {
+            if (player.otherPlayer.tileFrom[0] == new_position[0] && player.otherPlayer.tileFrom[1] == new_position[1]) {
                 willCollideWithPlayer = true;
             }
         }
