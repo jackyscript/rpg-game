@@ -73,3 +73,7 @@ TileMap.prototype.addRoofs = function (roofs) {
 };
 
 export const mapTileData = new TileMap();
+
+
+export const tileWidth = 40;
+export const tileHeight = 40;
