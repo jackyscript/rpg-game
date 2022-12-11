@@ -8,44 +8,17 @@ import { gameContext } from "./modules/context.js"
 import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileTypes, treeTileTypes } from "./modules/object/types.js"
 import { Character, directions } from "./modules/character.js"
 import { keysDown } from "./modules/key.js"
+import { typewriter as typeWriter, typeWriterNotWriting } from "./modules/typewriter.js"
 
 (function rpgGame() {
     var greetingTexts = ["Add your greetings here!", "Hello player 1!", "Hello player 2!", "In every programming project there must be one occurence of 'Hello world', don't you think?", "I don't know what I am talking about.", "Some greetings!", "Happy Birthday!", "Merry Christmas!", "Glad to see you, hope you are doing well?", "There you are, where were you heading?", "Happy to meet you."]
     var eatTexts = ["Mjam mjam", "Delicious!", "Tasty!", "This tastes good indeed.", "Yea!", "nom nom nom", "I think I should stop eating.", "One more.", "That tasted a little bit strange."]
     var introductionText = 'Omnipresent Being: Welcome to this little game, I hope you have fun.';
     var introductionGiven = false;
-    var typeWriterNotWriting = true;
 
-    function typeWriter(txt) {
-        var i = 0;
-        var txt = txt;
-        var speed = 10; /* The speed/duration of the effect in milliseconds */
-
-        resetTextArea();
-
-        function typeWriterInternal() {
-            if (i < txt.length) {
-                typeWriterNotWriting = true
-                var currentChar = txt.charAt(i);
-                if (currentChar.includes('.') || currentChar.includes('!'))
-                    speed = 400;
-                else
-                    speed = 10;
-                document.getElementById("gameText").innerHTML += currentChar;
-                i++;
-                setTimeout(typeWriterInternal, speed);
-            } else {
-                typeWriterNotWriting = false;
-            }
-        }
-        typeWriterInternal(txt);
-    }
     if (!introductionGiven)
         typeWriter(introductionText);
 
-    function resetTextArea() {
-        document.getElementById("gameText").innerHTML = "";
-    }
 
     var isViewportSetOnPlayer1 = true;
     
