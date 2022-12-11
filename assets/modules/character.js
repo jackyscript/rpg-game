@@ -3,7 +3,7 @@ import { keysDown } from "./key.js";
 import { mapWidth, mapHeight, toIndex } from "./map.js";
 import { Sprite } from "./sprite.js";
 import { mapTileData, tileWidth, tileHeight } from "./tile/tile.js"
-import { floorTypes, tileTypes } from "./object/types.js";
+import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileTypes, treeTileTypes } from "./object/types.js"
 
 export const directions = {
     up: 0,
@@ -11,6 +11,8 @@ export const directions = {
     down: 2,
     left: 3,
 };
+
+const npcTypes = [4,5,6,7,8,9];
 
 var getDirectionKey = function(directionValue) {
     if (directions.up == directionValue) {

@@ -57,8 +57,6 @@ import { typewriter as typeWriter, typeWriterNotWriting } from "./modules/typewr
 
     var quantifiableItems = [5, 7];
 
-
-    var npcTypes = [4,5,6,7,8,9];
     function MapObject(nt) {
         this.x = 0;
         this.y = 0;
