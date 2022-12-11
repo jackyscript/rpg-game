@@ -4,7 +4,9 @@ import { mapWidth, mapHeight, toIndex } from "./map.js";
 import { Sprite } from "./sprite.js";
 import { mapTileData, tileWidth, tileHeight } from "./tile/tile.js"
 import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileTypes, treeTileTypes } from "./object/types.js"
+import { Text } from "./text.js"
 
+export var cakesEaten = 0;
 export const directions = {
     up: 0,
     right: 1,
