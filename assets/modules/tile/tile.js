@@ -41,16 +41,7 @@ TileMap.prototype.buildMapFromData = function (d, w, h) {
 
     return true;
 };
-TileMap.prototype.saveCurrentMap = function () {
-    var savedGameMap = [];
-    for (var i = 0; i < this.map.length; i++) {
-        savedGameMap.push(this.map[i].type);
-    }
-    localStorage.setItem('gameMap', JSON.stringify(savedGameMap));
-    localStorage.setItem('occuredEvents', JSON.stringify(occuredEvents));
-    localStorage.setItem(player1.name, JSON.stringify(player1));
-    localStorage.setItem(player2.name, JSON.stringify(player2));
-};
+
 TileMap.prototype.addRoofs = function (roofs) {
     for (var i in roofs) {
         var r = roofs[i];

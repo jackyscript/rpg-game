@@ -10,6 +10,7 @@ import { keysDown } from "./modules/key.js"
 import { typewriter as typeWriter, typeWriterNotWriting } from "./modules/typewriter.js"
 import { Text } from "./modules/text.js"
 import { MapObject } from "./modules/object/map.js"
+import { occuredEvents } from "./modules/events.js"
 
 (function rpgGame() {
     const introductionText = 'Omnipresent Being: Welcome to this little game, I hope you have fun.';
@@ -93,9 +94,6 @@ import { MapObject } from "./modules/object/map.js"
     var player1 = new Character("player1");
     var player2 = new Character("player2");
 
-    player1.otherPlayer = player2;
-    player2.otherPlayer = player1;
-
     player1.tileFrom = [1, 17];
     player1.tileTo = [1, 17];
     player1.timeMoved = 0;
@@ -109,6 +107,27 @@ import { MapObject } from "./modules/object/map.js"
     player2.dimensions = [30, 30];
     player2.position = [player2.tileFrom[0] * 40, player2.tileFrom[1] * 40];
     player2.direction = directions.left
+
+    var saveCurrentMap = function () {
+
+        var savedGameMap = [];
+
+        for (let i = 0; i < mapTileData.map.length; i++) {
+            savedGameMap.push(mapTileData.map[i].type);
+        }
+
+        function replacer(key, value) { // break cyclic object serialization
+            if ("otherPlayer" == key)
+                return undefined;
+            else
+                return value;
+        }
+
+        localStorage.setItem('gameMap', JSON.stringify(savedGameMap));
+        localStorage.setItem('occuredEvents', JSON.stringify(occuredEvents));
+        localStorage.setItem(player1.name, JSON.stringify(player1, replacer));
+        localStorage.setItem(player2.name, JSON.stringify(player2, replacer));
+    };
 
     var loadSavedPlayer = function (player) {
         var savedPlayer = JSON.parse(localStorage.getItem(player.name));
@@ -129,6 +148,9 @@ import { MapObject } from "./modules/object/map.js"
     }
     loadSavedPlayer(player1);
     loadSavedPlayer(player2);
+
+    player1.otherPlayer = player2;
+    player2.otherPlayer = player1;
 
     function probability(n) {
         return !!n && Math.random() <= n;
@@ -291,7 +313,7 @@ import { MapObject } from "./modules/object/map.js"
 
                 if (keysDown[112]) {
 
-                    mapTileData.saveCurrentMap();
+                    saveCurrentMap();
 
                     if (!typeWriterNotWriting)
                         Text.gameSaved();
@@ -366,51 +388,51 @@ import { MapObject } from "./modules/object/map.js"
                     if (player.isNotMoving()) {
                         if (keysDown[49]) {
                             if (player == player1 && player1.isFacingOtherPlayer(player2)) {
-                                Character.exchangeItem(player1.inventory.getItemAt(0), player1, player2)
+                                Character.exchangeItem(player1.inventory.getItemAt(0))
                             }
                         } else if (keysDown[50]) {
                             if (player == player1 && player1.isFacingOtherPlayer(player2)) {
-                                Character.exchangeItem(player1.inventory.getItemAt(1), player1, player2)
+                                Character.exchangeItem(player1.inventory.getItemAt(1))
                             }
                         } else if (keysDown[51]) {
                             if (player == player1 && player1.isFacingOtherPlayer(player2)) {
-                                Character.exchangeItem(player1.inventory.getItemAt(2), player1, player2)
+                                Character.exchangeItem(player1.inventory.getItemAt(2))
                             }
                         } else if (keysDown[52]) {
                             if (player == player1 && player1.isFacingOtherPlayer(player2)) {
-                                Character.exchangeItem(player1.inventory.getItemAt(3), player1, player2)
+                                Character.exchangeItem(player1.inventory.getItemAt(3))
                             }
                         } else if (keysDown[53]) {
                             if (player == player1 && player1.isFacingOtherPlayer(player2)) {
-                                Character.exchangeItem(player1.inventory.getItemAt(4), player1, player2)
+                                Character.exchangeItem(player1.inventory.getItemAt(4))
                             }
                         } else if (keysDown[54]) {
                             if (player == player1 && player1.isFacingOtherPlayer(player2)) {
-                                Character.exchangeItem(player1.inventory.getItemAt(5), player1, player2)
+                                Character.exchangeItem(player1.inventory.getItemAt(5))
                             }
                         } else if (keysDown[55]) {
                             if (player == player2 && player2.isFacingOtherPlayer(player1)) {
-                                Character.exchangeItem(player2.inventory.getItemAt(0), player2, player1)
+                                Character.exchangeItem(player2.inventory.getItemAt(0))
                             }
                         } else if (keysDown[56]) {
                             if (player == player2 && player2.isFacingOtherPlayer(player1)) {
-                                Character.exchangeItem(player2.inventory.getItemAt(1), player2, player1)
+                                Character.exchangeItem(player2.inventory.getItemAt(1))
                             }
                         } else if (keysDown[57]) {
                             if (player == player2 && player2.isFacingOtherPlayer(player1)) {
-                                Character.exchangeItem(player2.inventory.getItemAt(2), player2, player1)
+                                Character.exchangeItem(player2.inventory.getItemAt(2))
                             }
                         } else if (keysDown[48]) {
                             if (player == player2 && player2.isFacingOtherPlayer(player1)) {
-                                Character.exchangeItem(player2.inventory.getItemAt(3), player2, player1)
+                                Character.exchangeItem(player2.inventory.getItemAt(3))
                             }
                         } else if (keysDown[63]) {
                             if (player == player2 && player2.isFacingOtherPlayer(player1)) {
-                                Character.exchangeItem(player2.inventory.getItemAt(4), player2, player1)
+                                Character.exchangeItem(player2.inventory.getItemAt(4))
                             }
                         } else if (keysDown[192]) {
                             if (player == player2 && player2.isFacingOtherPlayer(player1)) {
-                                Character.exchangeItem(player2.inventory.getItemAt(5), player2, player1)
+                                Character.exchangeItem(player2.inventory.getItemAt(5))
                             }
                         } else if (keysDown[75]) {
                             if (player2.isFacingOtherPlayer(player1)) {

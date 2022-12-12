@@ -5,6 +5,8 @@ import { Sprite } from "./sprite.js";
 import { mapTileData, tileWidth, tileHeight } from "./tile/tile.js"
 import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileTypes, treeTileTypes } from "./object/types.js"
 import { Text } from "./text.js"
+import { MapObject } from "./object/map.js";
+import { PlacedItemStack } from "./inventory.js";
 
 export var cakesEaten = 0;
 export const directions = {
@@ -412,12 +414,12 @@ Character.prototype.pickUp = function () {
     return true;
 };
 
-Character.exchangeItem = function (item, player1, player2) {
+Character.exchangeItem = function (item) {
 
     if (item) {
-        if (player1.inventory.containsItem(item)) {
-            player1.inventory.removeItem(item);
-            player2.inventory.addItems(item, 1)
+        if (this.inventory.containsItem(item)) {
+            this.inventory.removeItem(item);
+            otherPlayer.inventory.addItems(item, 1)
         }
     }
 
@@ -439,13 +441,13 @@ Character.prototype.interactWithMapObject = function () {
                 var animatedHammer = new MapObject(getObjectTypeByName('Hammer'))
                 animatedHammer.animate(this, 1000);
             }
-            if (!player2.inventory.containsItem(2) && !player1.inventory.containsItem(2)) {
+            if (!this.otherPlayer.inventory.containsItem(2) && !this.inventory.containsItem(2)) {
                 var axe = new PlacedItemStack(2, 1);
                 axe.placeAt(x, y);
-            } else if (!player2.inventory.containsItem(3) && !player1.inventory.containsItem(3)) {
+            } else if (!otherPlayer.inventory.containsItem(3) && !this.inventory.containsItem(3)) {
                 var pickAxe = new PlacedItemStack(3, 1);
                 pickAxe.placeAt(x, y);
-            } else if (!player2.inventory.containsItem(6) && !player1.inventory.containsItem(6)) {
+            } else if (!other.inventory.containsItem(6) && !this.inventory.containsItem(6)) {
                 var shovel = new PlacedItemStack(6, 1);
                 shovel.placeAt(x, y);
             } else {
