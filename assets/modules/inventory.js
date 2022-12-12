@@ -1,5 +1,5 @@
 import { Sprite } from "./sprite.js";
-import { toIndex } from "./map.js";
+import { toIndex } from "./gameMap.js";
 import { mapTileData } from "./tile/tile.js";
 
 export function Stack(id, qty) {

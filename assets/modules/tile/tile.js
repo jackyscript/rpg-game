@@ -1,4 +1,4 @@
-import { toIndex } from "../map.js";
+import { toIndex } from "../gameMap.js";
 
 export function Tile(tx, ty, tt) {
     this.x = tx;

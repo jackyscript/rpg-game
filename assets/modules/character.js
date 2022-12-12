@@ -1,6 +1,6 @@
 import { Inventory } from "./inventory.js";
 import { keysDown } from "./key.js";
-import { mapWidth, mapHeight, toIndex } from "./map.js";
+import { mapWidth, mapHeight, toIndex } from "./gameMap.js";
 import { Sprite } from "./sprite.js";
 import { mapTileData, tileWidth, tileHeight } from "./tile/tile.js"
 import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileTypes, treeTileTypes } from "./object/types.js"

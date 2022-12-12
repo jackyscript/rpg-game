@@ -1,4 +1,4 @@
-import { map as gameMap, toIndex, mapWidth, mapHeight } from "./modules/map.js"
+import { map as gameMap, toIndex, mapWidth, mapHeight } from "./modules/gameMap.js"
 import { mapTileData, tileWidth, tileHeight } from "./modules/tile/tile.js"
 import { PlacedItemStack, itemTypes } from "./modules/inventory.js"
 import { tilesetLoaded } from "./modules/tile/tileset.js"
