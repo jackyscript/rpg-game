@@ -9,6 +9,7 @@ import { cakesEaten, Character, directions } from "./modules/character.js"
 import { keysDown } from "./modules/key.js"
 import { typewriter as typeWriter, typeWriterNotWriting } from "./modules/typewriter.js"
 import { Text } from "./modules/text.js"
+import { MapObject } from "./modules/object/map.js"
 
 (function rpgGame() {
     const introductionText = 'Omnipresent Being: Welcome to this little game, I hope you have fun.';
@@ -19,7 +20,7 @@ import { Text } from "./modules/text.js"
 
 
     var isViewportSetOnPlayer1 = true;
-    
+
     var gameWidth = document.getElementById('game').getAttribute('width')
     var gameHeight = document.getElementById('game').getAttribute('height')
 
@@ -31,21 +32,21 @@ import { Text } from "./modules/text.js"
 
     var gameTime = 0;
     var gameSpeeds = [{
-            name: "",
-            speedFactor: 1
-        },
-        /*{
-          name: "Slow",
-          speedFactor: 0.3
-        },
-        {
-          name: "Fast",
-          speedFactor: 3
-        },*/
-        {
-            name: "Pause",
-            speedFactor: 0
-        }
+        name: "",
+        speedFactor: 1
+    },
+    /*{
+      name: "Slow",
+      speedFactor: 0.3
+    },
+    {
+      name: "Fast",
+      speedFactor: 3
+    },*/
+    {
+        name: "Pause",
+        speedFactor: 0
+    }
     ];
     var currentSpeed = 0;
 
@@ -53,35 +54,6 @@ import { Text } from "./modules/text.js"
     var player2UseLeftFootSprite = false;
 
     var quantifiableItems = [5, 7];
-
-    function MapObject(nt) {
-        this.x = 0;
-        this.y = 0;
-        this.type = nt;
-    }
-    MapObject.prototype.placeAt = function(nx, ny) {
-        if (mapTileData.map[toIndex(this.x, this.y)].object == this) {
-            mapTileData.map[toIndex(this.x, this.y)].object = null;
-        }
-
-        this.x = nx;
-        this.y = ny;
-
-        mapTileData.map[toIndex(nx, ny)].object = this;
-    };
-
-    MapObject.prototype.animate = function(player, duration) {
-
-        this.placeAt(player.tileFrom[0], player.tileFrom[1]);
-        var x = player.tileFrom[0];
-        var y = player.tileFrom[1];
-        var clearObject = function() {
-            var dataPosition = mapTileData.map[toIndex(x, y)];
-            if (dataPosition && dataPosition.object)
-                dataPosition.object = undefined
-        }
-        setTimeout(clearObject, duration);
-    };
 
     var offsetFactor = 8;
     var startTileFactor = 1;
@@ -91,7 +63,7 @@ import { Text } from "./modules/text.js"
         startTile: [0, 0],
         endTile: [0, 0],
         offset: [0, 0],
-        update: function(px, py) {
+        update: function (px, py) {
             this.offset[0] = Math.floor((this.screen[0] / offsetFactor) - px);
             this.offset[1] = Math.floor((this.screen[1] / offsetFactor) - py);
 
@@ -138,7 +110,7 @@ import { Text } from "./modules/text.js"
     player2.position = [player2.tileFrom[0] * 40, player2.tileFrom[1] * 40];
     player2.direction = directions.left
 
-    var loadSavedPlayer = function(player) {
+    var loadSavedPlayer = function (player) {
         var savedPlayer = JSON.parse(localStorage.getItem(player.name));
         if (savedPlayer) {
             player.tileFrom = savedPlayer.tileFrom;
@@ -158,31 +130,31 @@ import { Text } from "./modules/text.js"
     loadSavedPlayer(player1);
     loadSavedPlayer(player2);
 
-    function probability(n){
+    function probability(n) {
         return !!n && Math.random() <= n;
     }
 
-    function seldom(){
+    function seldom() {
         return probability(0.1);
     }
 
-    function occasionally(){
+    function occasionally() {
         return probability(0.3);
     }
 
-    window.onload = function() {
+    window.onload = function () {
 
         requestAnimationFrame(drawGame);
         gameContext.font = "bold 10pt sans-serif";
 
-        window.addEventListener("keydown", function(e) {
+        window.addEventListener("keydown", function (e) {
             if (e.keyCode in keysDown) {
                 keysDown[e.keyCode] = true;
                 e.preventDefault();
                 return false;
             }
         });
-        window.addEventListener("keyup", function(e) {
+        window.addEventListener("keyup", function (e) {
             /*if (e.keyCode == 19) {
               currentSpeed = (currentSpeed >= (gameSpeeds.length - 1) ? 0 : currentSpeed + 1);
             }*/
@@ -226,7 +198,7 @@ import { Text } from "./modules/text.js"
             new MapObject(getObjectTypeByName('WiseSage')).placeAt(9, 60);
             new MapObject(getObjectTypeByName('Box')).placeAt(23, 10);
 
-            var spawnCake = function() {
+            var spawnCake = function () {
                 const flowerFieldWidth = 11;
                 const rowStart = 19;
                 const rowEnd = 24;
@@ -313,19 +285,19 @@ import { Text } from "./modules/text.js"
             frameCount++;
         }
 
-        var processKeyboardInput = function(player) {
+        var processKeyboardInput = function (player) {
 
             if (!player.processMovement(gameTime) && gameSpeeds[currentSpeed].speedFactor != 0) {
-                
+
                 if (keysDown[112]) {
-                    
+
                     mapTileData.saveCurrentMap();
-                    
+
                     if (!typeWriterNotWriting)
                         Text.gameSaved();
                 } else if (keysDown[113]) {
                     localStorage.clear();
-                    
+
                     if (!typeWriterNotWriting)
                         Text.saveGameDeleted();
                 } else if (keysDown[171]) {
@@ -344,7 +316,7 @@ import { Text } from "./modules/text.js"
                         } else if (keysDown[68]) {
                             player.moveRight(gameTime);
                         }
-                        
+
                         if (player.isNotMoving()) {
                             if (keysDown[84]) {
                                 player.pickUp();
@@ -372,7 +344,7 @@ import { Text } from "./modules/text.js"
                         } else if (keysDown[39]) {
                             player.moveRight(gameTime);
                         }
-                        
+
                         if (player.isNotMoving()) {
                             if (keysDown[90]) {
                                 player.pickUp();
@@ -458,7 +430,7 @@ import { Text } from "./modules/text.js"
         processKeyboardInput(player1);
         processKeyboardInput(player2);
 
-        var setViewPortOn = function(player) {
+        var setViewPortOn = function (player) {
             viewport.update(player.position[0] + (player.dimensions[0] / 2),
                 player.position[1] + (player.dimensions[1] / 2));
         };
@@ -468,11 +440,11 @@ import { Text } from "./modules/text.js"
             setViewPortOn(player2);
         }
 
-        var checkPlayerRoofFrom = function(player) {
+        var checkPlayerRoofFrom = function (player) {
             return mapTileData.map[toIndex(
                 player.tileFrom[0], player.tileFrom[1])].roof;
         }
-        var checkPlayerRoofTo = function(player) {
+        var checkPlayerRoofTo = function (player) {
             return mapTileData.map[toIndex(
                 player.tileTo[0], player.tileTo[1])].roof;
         }
@@ -509,7 +481,7 @@ import { Text } from "./modules/text.js"
                     }
 
                     if (currentTileLevel == 2) {
-                        var isRoofPassed = function() {
+                        var isRoofPassed = function () {
                             return mapTileData.map[toIndex(x, y)].roofType != 0 &&
                                 mapTileData.map[toIndex(x, y)].roof != checkPlayerRoofFrom(player1) &&
                                 mapTileData.map[toIndex(x, y)].roof != checkPlayerRoofTo(player1) &&
@@ -566,7 +538,7 @@ import { Text } from "./modules/text.js"
         gameContext.fillStyle = "#ff0000";
         //gameContext.fillText("FPS: " + framesLastSecond, 10, 20);
         //gameContext.fillText(gameSpeeds[currentSpeed].name, 10, 20);
-        
+
         gameContext.fillStyle = 'rgba(255, 255, 255, 0.5)';
         gameContext.fillRect(gameWidth - 190, gameHeight - 50,
             170, 40);
