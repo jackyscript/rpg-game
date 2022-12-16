@@ -17,7 +17,7 @@ A browser game using HTML Canvas and JS
 The tiles are conceptually drafted using placeholder texts, it should just serve as a proof of concept.
 
 ## Build/Development:
-Currently the goal is to migrate the project's structure using [ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
+Currently the goal is to finish migrating the project's structure using [ES6 modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 Alongside development [Live Server Plugin for vs code](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) is used, as modules development requires a server from which the files will be requested from ([see also the following link](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#other_differences_between_modules_and_standard_scripts)).
 
 ## Deployment:
