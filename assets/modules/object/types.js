@@ -575,7 +575,6 @@ export const objectTypes = {
 };
 
 
-var treeFloorTypes = [10, 11, 14, 15, 16, 17, 18, 19];
 export const floorTypes = {
     solid: 0,
     path: 1,
