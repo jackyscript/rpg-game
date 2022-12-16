@@ -16,9 +16,9 @@ export const directions = {
     left: 3,
 };
 
-const npcTypes = [4,5,6,7,8,9];
+const npcTypes = [4, 5, 6, 7, 8, 9];
 
-var getDirectionKey = function(directionValue) {
+var getDirectionKey = function (directionValue) {
     if (directions.up == directionValue) {
         return "up";
     } else if (directions.right == directionValue) {

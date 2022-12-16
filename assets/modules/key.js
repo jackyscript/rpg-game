@@ -1,5 +1,3 @@
-var movementKeys = [87, 65, 83, 68, 37, 38, 39, 40];
-
 export const keysDown = {
     13: false,
     37: false,

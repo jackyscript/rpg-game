@@ -7,7 +7,7 @@ export function MapObject(nt) {
     this.type = nt;
 }
 
-MapObject.prototype.placeAt = function(nx, ny) {
+MapObject.prototype.placeAt = function (nx, ny) {
     if (mapTileData.map[toIndex(this.x, this.y)].object == this) {
         mapTileData.map[toIndex(this.x, this.y)].object = null;
     }
@@ -18,12 +18,12 @@ MapObject.prototype.placeAt = function(nx, ny) {
     mapTileData.map[toIndex(nx, ny)].object = this;
 };
 
-MapObject.prototype.animate = function(player, duration) {
+MapObject.prototype.animate = function (player, duration) {
 
     this.placeAt(player.tileFrom[0], player.tileFrom[1]);
     var x = player.tileFrom[0];
     var y = player.tileFrom[1];
-    var clearObject = function() {
+    var clearObject = function () {
         var dataPosition = mapTileData.map[toIndex(x, y)];
         if (dataPosition && dataPosition.object)
             dataPosition.object = undefined
