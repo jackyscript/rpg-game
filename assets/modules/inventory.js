@@ -1,6 +1,6 @@
 import { Sprite } from "./sprite.js";
-import { toIndex } from "./gameMap.js";
 import { mapTileData } from "./tile/tile.js";
+import { toIndex } from "./gameMap.js";
 
 export function Stack(id, qty) {
     this.type = id;

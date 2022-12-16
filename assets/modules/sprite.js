@@ -1,6 +1,6 @@
-import {tileset} from "./tile/tileset.js"
 import {gameContext} from "./context.js"
 import {getRandomInt} from "./utils.js"
+import {tileset} from "./tile/tileset.js"
 
 export function Sprite(data) {
     this.animated = data.length > 1;

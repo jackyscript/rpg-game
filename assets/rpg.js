@@ -1,16 +1,17 @@
-import { map as gameMap, toIndex, mapWidth, mapHeight } from "./modules/gameMap.js"
-import { mapTileData, tileWidth, tileHeight } from "./modules/tile/tile.js"
+import { Character, cakesEaten, directions } from "./modules/character.js"
 import { PlacedItemStack, itemTypes } from "./modules/inventory.js"
-import { tilesetLoaded } from "./modules/tile/tileset.js"
-import { roofList } from "./modules/roof.js"
-import { gameContext } from "./modules/context.js"
+import { map as gameMap, mapHeight, mapWidth, toIndex } from "./modules/gameMap.js"
 import { getObjectTypeByName, objectTypes, tileTypes } from "./modules/object/types.js"
-import { cakesEaten, Character, directions } from "./modules/character.js"
-import { keysDown } from "./modules/key.js"
+import { mapTileData, tileHeight, tileWidth } from "./modules/tile/tile.js"
 import { typewriter as typeWriter, typeWriterNotWriting } from "./modules/typewriter.js"
-import { Text } from "./modules/text.js"
+
 import { MapObject } from "./modules/object/map.js"
+import { Text } from "./modules/text.js"
+import { gameContext } from "./modules/context.js"
+import { keysDown } from "./modules/key.js"
 import { occuredEvents } from "./modules/events.js"
+import { roofList } from "./modules/roof.js"
+import { tilesetLoaded } from "./modules/tile/tileset.js"
 
 (function rpgGame() {
     const introductionText = 'Omnipresent Being: Welcome to this little game, I hope you have fun.';
