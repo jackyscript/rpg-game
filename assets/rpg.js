@@ -153,18 +153,6 @@ import { tilesetLoaded } from "./modules/tile/tileset.js"
     player1.otherPlayer = player2;
     player2.otherPlayer = player1;
 
-    function probability(n) {
-        return !!n && Math.random() <= n;
-    }
-
-    function seldom() {
-        return probability(0.1);
-    }
-
-    function occasionally() {
-        return probability(0.3);
-    }
-
     window.onload = function () {
 
         requestAnimationFrame(drawGame);

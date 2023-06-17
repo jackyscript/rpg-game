@@ -1,5 +1,6 @@
 import { occuredEvents } from "./events.js"
 import { typewriter as typeWriter } from "./typewriter.js"
+import { occasionally } from "./random.js"
 
 export class Text { }
 
@@ -35,28 +36,23 @@ Text.needHammer = function() {
 };
 
 Text.needAxe = function(player) {
-    var playerName = player.name.toUpperCase();
-    typeWriter(playerName + ": I will need an axe for that.");
+    playerSaying(player, "I will need an axe for that.");
 };
 
 Text.needWood = function(player) {
-    var playerName = player.name.toUpperCase();
-    typeWriter(playerName + ": Don't have enough wood with me.");
+    playerSaying(player, "Don't have enough wood with me.");
 };
 
 Text.needStone = function(player) {
-    var playerName = player.name.toUpperCase();
-    typeWriter(playerName + ": Need stones!");
+    playerSaying(player, "Need stones!");
 };
 
 Text.needPickAxe = function(player) {
-    var playerName = player.name.toUpperCase();
-    typeWriter(playerName + ": A pickaxe would be perfect now.");
+    playerSaying(player, "A pickaxe would be perfect now.");
 };
 
 Text.needShovel = function(player) {
-    var playerName = player.name.toUpperCase();
-    typeWriter(playerName + ": I need a shovel.");
+    playerSaying(player, "I need a shovel.");
 };
 
 Text.receivedItem = function(item) {
@@ -81,8 +77,7 @@ Text.receivedItem = function(item) {
 };
 
 Text.hammerTime = function(player) {
-    var playerName = player.name.toUpperCase();
-    typeWriter(playerName + " excitedly: Hammer Time!");
+    playerSaying(player, "Hammer Time!", "excitedly");
 };
 
 Text.gameSaved = function() {
@@ -94,44 +89,37 @@ Text.saveGameDeleted = function() {
 };
 
 Text.eatCake = function(player) {
-    var playerName = player.name.toUpperCase();
-    typeWriter(playerName + ": " + eatTexts[Math.floor(Math.random() * eatTexts.length)]);
+    var eatText = eatTexts[Math.floor(Math.random() * eatTexts.length)];
+    playerSaying(player, eatText);
 };
 
 Text.plantTree = function(player) {
-    var playerName = player.name.toUpperCase();
-    if (seldom()) {
-        typeWriter(playerName + "sows seeds: To quickly plant trees like that is only possible in games!");
-    }
+    playerSaying(player, "To quickly plant trees like that is only possible in games!", "sows seeds");
 };
 
 Text.cutTree = function(player) {
-    var playerName = player.name.toUpperCase();
-    if (seldom()) {
-        typeWriter(playerName + " swings axe: *Boo hoo*");
-    }
+    playerSaying(player, "*Boo hoo*", "swings axe");
 };
 
 Text.mineOre = function(player) {
-    var playerName = player.name.toUpperCase();
-    if (seldom()) {
-        typeWriter(playerName + " swings pickaxe: ...time tries to heal our wounds...");
-    }
+    playerSaying(player, "...time tries to heal our wounds...", "swings pickaxe");
 };
 
 Text.buildWall = function(player) {
-    var playerName = player.name.toUpperCase();
-    if (seldom()) {
-        typeWriter(playerName + ": People tend to build too many walls not bridges.");
-    }
+    playerSaying(player, "People tend to build too many walls not bridges.");
 };
 
 Text.buildBridge = function(player) {
-    var playerName = player.name.toUpperCase();
-    if (seldom()) {
-        typeWriter(playerName + ": It is better to build bridges than walls.");
-    }
+    playerSaying(player, "It is better to build bridges than walls.");
 };
+
+function playerSaying(player, saying, action) {
+    
+    var playerName = player.name.toUpperCase();
+    if (occasionally()) {
+        typeWriter(` ${playerName} ${action? action : ""}: ${saying}`);
+    }
+}
 
 Text.showAffection = function(player1, player2) {
     var player1Name = player1.name.toUpperCase();
