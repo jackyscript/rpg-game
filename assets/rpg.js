@@ -94,6 +94,8 @@ import { tilesetLoaded } from "./modules/tile/tileset.js"
     };
     var player1 = new Character("player1");
     var player2 = new Character("player2");
+    player1.setOtherPlayer(player2);
+    player2.setOtherPlayer(player1);
 
     player1.tileFrom = [1, 17];
     player1.tileTo = [1, 17];

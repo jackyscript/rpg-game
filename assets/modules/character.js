@@ -140,6 +140,10 @@ export function Character(name) {
     this.inventory = new Inventory(6);
 }
 
+Character.prototype.setOtherPlayer = function (otherPlayer) {
+    this.otherPlayer = otherPlayer;
+}
+
 Character.prototype.placeAt = function (x, y) {
     this.tileFrom = [x, y];
     this.tileTo = [x, y];
@@ -420,7 +424,7 @@ Character.exchangeItem = function (item) {
     if (item) {
         if (this.inventory.containsItem(item)) {
             this.inventory.removeItem(item);
-            otherPlayer.inventory.addItems(item, 1)
+            this.otherPlayer.inventory.addItems(item, 1)
         }
     }
 
@@ -445,10 +449,10 @@ Character.prototype.interactWithMapObject = function () {
             if (!this.otherPlayer.inventory.containsItem(2) && !this.inventory.containsItem(2)) {
                 var axe = new PlacedItemStack(2, 1);
                 axe.placeAt(x, y);
-            } else if (!otherPlayer.inventory.containsItem(3) && !this.inventory.containsItem(3)) {
+            } else if (!this.otherPlayer.inventory.containsItem(3) && !this.inventory.containsItem(3)) {
                 var pickAxe = new PlacedItemStack(3, 1);
                 pickAxe.placeAt(x, y);
-            } else if (!other.inventory.containsItem(6) && !this.inventory.containsItem(6)) {
+            } else if (!this.otherPlayer.inventory.containsItem(6) && !this.inventory.containsItem(6)) {
                 var shovel = new PlacedItemStack(6, 1);
                 shovel.placeAt(x, y);
             } else {
