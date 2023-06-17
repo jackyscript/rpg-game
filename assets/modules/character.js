@@ -165,14 +165,52 @@ Character.prototype.showAffection = function () {
     animatedHeart.animate(this, 3000)
 };
 
-Character.prototype.processMovement = function (t) {
+Character.prototype.processMovement = function processByTime(currentTime) {
+
+    // Basic collision detection
     if (this.tileFrom[0] == this.tileTo[0] && this.tileFrom[1] == this.tileTo[1]) {
+
         return false;
+
     }
 
-    var moveSpeed = this.delayMove[tileTypes[mapTileData.map[toIndex(this.tileFrom[0], this.tileFrom[1])].type].floor];
+    var moveSpeed = getMovementSpeedByTerrain.call(this);
 
-    if ((t - this.timeMoved) >= moveSpeed) {
+    if ((currentTime - this.timeMoved) >= moveSpeed) {
+
+        setupSlidingMovement.call(this);
+
+    } else {
+
+        animateMovement.call(this);
+
+    }
+
+    return true;
+
+    function animateMovement() {
+
+        this.position[0] = (this.tileFrom[0] * tileWidth) + ((tileWidth - this.dimensions[0]) / 2);
+        this.position[1] = (this.tileFrom[1] * tileHeight) + ((tileHeight - this.dimensions[1]) / 2);
+
+        var positionXFrom = this.position[0];
+
+        var positionYFrom = this.position[1];
+
+        processDiffPosition.call(this, 0);
+        processDiffPosition.call(this, 1);
+
+        if (isNaN(this.position[0]))
+            this.position[0] = positionXFrom;
+        if (isNaN(this.position[1]))
+            this.position[1] = positionYFrom;
+        this.position[0] = Math.round(this.position[0]);
+        this.position[1] = Math.round(this.position[1]);
+
+    }
+
+    function setupSlidingMovement() {
+
         this.placeAt(this.tileTo[0], this.tileTo[1]);
 
         if (mapTileData.map[toIndex(this.tileTo[0], this.tileTo[1])].eventEnter != null) {
@@ -184,44 +222,34 @@ Character.prototype.processMovement = function (t) {
 
         if (tileFloor == floorTypes.ice) {
             if (this.canMoveDirection(this.direction)) {
-                this.moveDirection(this.direction, t);
+                this.moveDirection(this.direction, currentTime);
             }
         } else if (tileFloor == floorTypes.conveyorL) {
-            this.moveLeft(t);
+            this.moveLeft(currentTime);
         } else if (tileFloor == floorTypes.conveyorR) {
-            this.moveRight(t);
+            this.moveRight(currentTime);
         } else if (tileFloor == floorTypes.conveyorU) {
-            this.moveUp(t);
+            this.moveUp(currentTime);
         } else if (tileFloor == floorTypes.conveyorD) {
-            this.moveDown(t);
-        }
-    } else {
-        this.position[0] = (this.tileFrom[0] * tileWidth) + ((tileWidth - this.dimensions[0]) / 2);
-        this.position[1] = (this.tileFrom[1] * tileHeight) + ((tileHeight - this.dimensions[1]) / 2);
-
-        var positionXFrom = this.position[0];
-
-        var positionYFrom = this.position[1];
-        if (this.tileTo[0] != this.tileFrom[0]) {
-            var diff = (tileWidth / moveSpeed) * (t - this.timeMoved);
-            this.position[0] += (this.tileTo[0] < this.tileFrom[0] ? 0 - diff : diff);
-        }
-        if (this.tileTo[1] != this.tileFrom[1]) {
-            var diff = (tileHeight / moveSpeed) * (t - this.timeMoved);
-            this.position[1] += (this.tileTo[1] < this.tileFrom[1] ? 0 - diff : diff);
+            this.moveDown(currentTime);
         }
 
-
-        if (isNaN(this.position[0]))
-            this.position[0] = positionXFrom
-        if (isNaN(this.position[1]))
-            this.position[1] = positionYFrom
-        this.position[0] = Math.round(this.position[0]);
-        this.position[1] = Math.round(this.position[1]);
     }
 
-    return true;
+    function processDiffPosition(axis) {
+
+        if (this.tileTo[axis] != this.tileFrom[axis]) {
+
+            var diff = (tileWidth / moveSpeed) * (currentTime - this.timeMoved);
+
+            this.position[axis] += (this.tileTo[axis] < this.tileFrom[axis] ? 0 - diff : diff);
+
+        }
+
+    }
+
 }
+
 Character.prototype.canMoveTo = function (x, y) {
     if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) {
         return false;
@@ -330,40 +358,40 @@ Character.prototype.canMoveDirection = function (d) {
     }
 };
 
-Character.prototype.moveLeft = function (t) {
+Character.prototype.moveLeft = function (currentTime) {
     if (this.canMove('left'))
         this.tileTo[0] -= 1;
-    this.timeMoved = t;
+    this.timeMoved = currentTime;
     this.direction = directions.left;
 };
-Character.prototype.moveRight = function (t) {
+Character.prototype.moveRight = function (currentTime) {
     if (this.canMove('right'))
         this.tileTo[0] += 1;
-    this.timeMoved = t;
+    this.timeMoved = currentTime;
     this.direction = directions.right;
 };
-Character.prototype.moveUp = function (t) {
+Character.prototype.moveUp = function (currentTime) {
     if (this.canMove('up'))
         this.tileTo[1] -= 1;
-    this.timeMoved = t;
+    this.timeMoved = currentTime;
     this.direction = directions.up;
 };
-Character.prototype.moveDown = function (t) {
+Character.prototype.moveDown = function (currentTime) {
     if (this.canMove('down'))
         this.tileTo[1] += 1;
-    this.timeMoved = t;
+    this.timeMoved = currentTime;
     this.direction = directions.down;
 };
-Character.prototype.moveDirection = function (d, t) {
+Character.prototype.moveDirection = function (d, currentTime) {
     switch (d) {
         case directions.up:
-            return this.moveUp(t);
+            return this.moveUp(currentTime);
         case directions.down:
-            return this.moveDown(t);
+            return this.moveDown(currentTime);
         case directions.left:
-            return this.moveLeft(t);
+            return this.moveLeft(currentTime);
         default:
-            return this.moveRight(t);
+            return this.moveRight(currentTime);
     }
 };
 
@@ -595,3 +623,9 @@ Character.prototype.plantTree = function () {
         return false;
     }
 };
+
+function getMovementSpeedByTerrain() {
+
+    return this.delayMove[tileTypes[mapTileData.map[toIndex(this.tileFrom[0], this.tileFrom[1])].type].floor];
+
+}
