@@ -6,44 +6,48 @@ export const objectCollision = {
 };
 
 export const getObjectTypeByName = function (name) {
-    if ('Box' === name)
-        return 1;
-    else if ('Broken Box' === name)
-        return 2;
-    else if ('Cake' === name)
-        return 3;
-    else if ('Hearts' === name)
-        return 4;
-    else if ('Hare' === name)
-        return 5;
-    else if ('Goat' === name)
-        return 6;
-    else if ('Cat' === name)
-        return 7;
-    else if ('Pig' === name)
-        return 8;
-    else if ('Dog' === name)
-        return 9;
-    else if ('Registrar' === name)
-        return 10;
-    else if ('Goat2' === name)
-        return 11;
-    else if ('Cat2' === name)
-        return 12;
-    else if ('Pig2' === name)
-        return 13;
-    else if ('Dog2' === name)
-        return 14;
-    else if ('Shovel' === name)
-        return 15;
-    else if ('Axe' === name)
-        return 16;
-    else if ('Hammer' === name)
-        return 17;
-    else if ('Pickaxe' === name)
-        return 18;
-    else if ('WiseSage' === name)
-        return 19;
+
+    switch (name) {
+        case 'Box':
+            return 1;
+        case 'Broken Box':
+            return 2;
+        case 'Cake':
+            return 3;
+        case 'Hearts':
+            return 4;
+        case 'Hare':
+            return 5;
+        case 'Goat':
+            return 6;
+        case 'Cat':
+            return 7;
+        case 'Pig':
+            return 8;
+        case 'Dog':
+            return 9;
+        case 'Registrar':
+            return 10;
+        case 'Goat2':
+            return 11;
+        case 'Cat2':
+            return 12;
+        case 'Pig2':
+            return 13;
+        case 'Dog2':
+            return 14;
+        case 'Shovel':
+            return 15;
+        case 'Axe':
+            return 16;
+        case 'Hammer':
+            return 17;
+        case 'Pickaxe':
+            return 18;
+        case 'WiseSage':
+            return 19;
+    }
+
 };
 
 export const objectTypes = {
