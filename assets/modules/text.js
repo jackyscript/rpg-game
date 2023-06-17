@@ -60,14 +60,24 @@ Text.needShovel = function(player) {
 };
 
 Text.receivedItem = function(item) {
-    if (2 == item.type)
-        typeWriter("You got an axe!");
-    else if (3 == item.type)
-        typeWriter("You got a pickaxe!");
-    if (4 == item.type)
-        typeWriter("You got a hammer!");
-    if (6 == item.type)
-        typeWriter("You got a shovel!");
+
+    switch (item.type) {
+
+        case 2:
+            typeWriter("You got an axe!");
+            break;
+        case 3:
+            typeWriter("You got a pickaxe!");
+            break;
+        case 4:
+            typeWriter("You got a hammer!");
+            break;
+        case 6:
+            typeWriter("You got a shovel!");
+            break;
+
+    }
+
 };
 
 Text.hammerTime = function(player) {
