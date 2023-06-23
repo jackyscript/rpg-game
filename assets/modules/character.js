@@ -279,14 +279,20 @@ Character.prototype.isFacingOtherPlayer = function (player) {
 
 Character.prototype.isFacingMapObject = function () {
     var dataPosition = null;
-    if (directions.down === this.direction)
-        dataPosition = mapTileData.map[toIndex(this.tileFrom[0], this.tileFrom[1] + 1)];
-    else if (directions.up === this.direction)
-        dataPosition = mapTileData.map[toIndex(this.tileFrom[0], this.tileFrom[1] - 1)];
-    else if (directions.left === this.direction)
-        dataPosition = mapTileData.map[toIndex(this.tileFrom[0] - 1, this.tileFrom[1])];
-    else if (directions.right === this.direction)
-        dataPosition = mapTileData.map[toIndex(this.tileFrom[0] + 1, this.tileFrom[1])];
+    switch (this.direction) {
+        case directions.down:
+            dataPosition = mapTileData.map[toIndex(this.tileFrom[0], this.tileFrom[1] + 1)];
+            break;
+        case directions.up:
+            dataPosition = mapTileData.map[toIndex(this.tileFrom[0], this.tileFrom[1] - 1)];
+            break;
+        case directions.left:
+            dataPosition = mapTileData.map[toIndex(this.tileFrom[0] - 1, this.tileFrom[1])];
+            break;
+        case directions.right:
+            dataPosition = mapTileData.map[toIndex(this.tileFrom[0] + 1, this.tileFrom[1])];
+            break;
+    }
     if (dataPosition) {
         return dataPosition;
     } else {
