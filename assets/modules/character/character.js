@@ -1,13 +1,13 @@
-import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileTypes, treeTileTypes } from "./object/types.js"
-import { mapHeight, mapWidth, toIndex } from "./gameMap.js";
-import { mapTileData, tileHeight, tileWidth, Tile } from "./tile/tile.js"
+import { floorTypes, getObjectTypeByName, objectCollision, objectTypes, tileTypes, treeTileTypes } from "../object/types.js"
+import { mapHeight, mapWidth, toIndex } from "../gameMap.js";
+import { mapTileData, tileHeight, tileWidth, Tile } from "../tile/tile.js"
 
-import { Inventory } from "./inventory.js";
-import { MapObject } from "./object/map.js";
-import { PlacedItemStack } from "./inventory.js";
-import { Sprite } from "./sprite.js";
-import { Text } from "./text.js"
-import { keysDown } from "./key.js";
+import { Inventory } from "../inventory.js";
+import { MapObject } from "../object/map.js";
+import { PlacedItemStack } from "../inventory.js";
+import { Sprite } from "../sprite.js";
+import { Text } from "../text.js"
+import { keysDown } from "../key.js";
 import { DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT } from "./characterConstants.js"
 
 export var cakesEaten = 0;

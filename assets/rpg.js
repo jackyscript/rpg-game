@@ -1,4 +1,4 @@
-import { Character, cakesEaten, directions } from "./modules/character.js"
+import { Character, cakesEaten, directions } from "./modules/character/character.js"
 import { PlacedItemStack, itemTypes } from "./modules/inventory.js"
 import { map as gameMap, mapHeight, mapWidth, toIndex } from "./modules/gameMap.js"
 import { getObjectTypeByName, objectTypes, tileTypes } from "./modules/object/types.js"
