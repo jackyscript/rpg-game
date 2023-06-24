@@ -8,6 +8,7 @@ import { PlacedItemStack } from "./inventory.js";
 import { Sprite } from "./sprite.js";
 import { Text } from "./text.js"
 import { keysDown } from "./key.js";
+import { DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT } from "./characterConstants.js"
 
 export var cakesEaten = 0;
 export const directions = {
@@ -21,13 +22,13 @@ const npcTypes = [4, 5, 6, 7, 8, 9];
 
 var getDirectionKey = function (directionValue) {
     if (directions.up == directionValue) {
-        return "up";
+        return DIRECTION_UP;
     } else if (directions.right == directionValue) {
-        return "right";
+        return DIRECTION_RIGHT;
     } else if (directions.down == directionValue) {
-        return "down";
+        return DIRECTION_DOWN;
     } else if (directions.left == directionValue) {
-        return "left";
+        return DIRECTION_LEFT;
     }
 }
 
@@ -312,16 +313,16 @@ Character.playerOccupiesTile = function (player, tileX, tileY) {
 Character.prototype.getNextPositionFromDirection = function (direction) {
 
     var nextPosition = [];
-    if ('up' === direction) {
+    if (DIRECTION_UP === direction) {
         nextPosition.push(this.tileFrom[0]);
         nextPosition.push(this.tileFrom[1] - 1);
-    } else if ('down' === direction) {
+    } else if (DIRECTION_DOWN === direction) {
         nextPosition.push(this.tileFrom[0]);
         nextPosition.push(this.tileFrom[1] + 1);
-    } else if ('left' === direction) {
+    } else if (DIRECTION_LEFT === direction) {
         nextPosition.push(this.tileFrom[0] - 1);
         nextPosition.push(this.tileFrom[1]);
-    } else if ('right' === direction) {
+    } else if (DIRECTION_RIGHT === direction) {
         nextPosition.push(this.tileFrom[0] + 1);
         nextPosition.push(this.tileFrom[1]);
     }
@@ -354,36 +355,36 @@ Character.prototype.canMove = function (direction) {
 Character.prototype.canMoveDirection = function (d) {
     switch (d) {
         case directions.up:
-            return this.canMove('up');
+            return this.canMove(DIRECTION_UP);
         case directions.down:
-            return this.canMove('down');
+            return this.canMove(DIRECTION_DOWN);
         case directions.left:
-            return this.canMove('left');
+            return this.canMove(DIRECTION_LEFT);
         default:
-            return this.canMove('right');
+            return this.canMove(DIRECTION_RIGHT);
     }
 };
 
 Character.prototype.moveLeft = function (currentTime) {
-    if (this.canMove('left'))
+    if (this.canMove(DIRECTION_LEFT))
         this.tileTo[0] -= 1;
     this.timeMoved = currentTime;
     this.direction = directions.left;
 };
 Character.prototype.moveRight = function (currentTime) {
-    if (this.canMove('right'))
+    if (this.canMove(DIRECTION_RIGHT))
         this.tileTo[0] += 1;
     this.timeMoved = currentTime;
     this.direction = directions.right;
 };
 Character.prototype.moveUp = function (currentTime) {
-    if (this.canMove('up'))
+    if (this.canMove(DIRECTION_UP))
         this.tileTo[1] -= 1;
     this.timeMoved = currentTime;
     this.direction = directions.up;
 };
 Character.prototype.moveDown = function (currentTime) {
-    if (this.canMove('down'))
+    if (this.canMove(DIRECTION_DOWN))
         this.tileTo[1] += 1;
     this.timeMoved = currentTime;
     this.direction = directions.down;
